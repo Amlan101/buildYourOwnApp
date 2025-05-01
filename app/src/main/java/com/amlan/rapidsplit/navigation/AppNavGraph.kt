@@ -11,6 +11,7 @@ import com.amlan.rapidsplit.ui.presentation.home.HomeScreen
 import com.amlan.rapidsplit.ui.presentation.login.LoginScreen
 import com.amlan.rapidsplit.ui.presentation.onboarding.OnboardingScreen
 import com.amlan.rapidsplit.ui.presentation.payment.PaymentScreen
+import com.amlan.rapidsplit.ui.presentation.payment.PaymentSuccessScreen
 import com.amlan.rapidsplit.ui.presentation.ride_selection.RideSelectionScreen
 import com.amlan.rapidsplit.ui.presentation.splash.SplashScreen
 
@@ -28,5 +29,6 @@ fun AppNavGraph(navController: NavHostController){
         composable(Screen.Booking.route) { BookingScreen(navController) }
         composable(Screen.Payment.route) { PaymentScreen(navController) }
         composable(Screen.FuelSplit.route) { FuelSplitScreen(navController) }
+        composable(Screen.PaymentSuccess.route) { PaymentSuccessScreen(navController) }
     }
 }

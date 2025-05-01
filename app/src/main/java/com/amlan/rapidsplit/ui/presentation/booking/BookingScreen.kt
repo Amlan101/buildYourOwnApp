@@ -62,7 +62,7 @@ fun BookingScreen(
                 }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Go Back")
                 }
-                Text("Booking Details", style = MaterialTheme.typography.bodyLarge)
+                Text("Booking Details", style = MaterialTheme.typography.titleLarge)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
