@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.amlan.rapidsplit.domain.model.Ride
 import com.amlan.rapidsplit.domain.model.VehicleType
 import com.amlan.rapidsplit.domain.usecase.CalculateEstimateUseCase
+import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
 
 class RideSelectionViewModel(
     private val calculateEstimateUseCase: CalculateEstimateUseCase
@@ -20,6 +21,12 @@ class RideSelectionViewModel(
     fun calculateEstimate() {
         if (startLocation.isNotBlank() && destination.isNotBlank()) {
             rideEstimate = calculateEstimateUseCase(startLocation, destination, selectedVehicle)
+        }
+    }
+    fun confirmRide(sharedViewModel: RideSharedViewModel) {
+        rideEstimate?.let {
+            // Use the setter method instead of direct assignment
+            sharedViewModel.setConfirmedRide(it)
         }
     }
 }

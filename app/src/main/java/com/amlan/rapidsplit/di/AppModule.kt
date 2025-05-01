@@ -7,6 +7,7 @@ import com.amlan.rapidsplit.domain.usecase.LoginUseCase
 import com.amlan.rapidsplit.ui.presentation.login.LoginViewModel
 import com.amlan.rapidsplit.ui.presentation.onboarding.OnboardingViewModel
 import com.amlan.rapidsplit.ui.presentation.ride_selection.RideSelectionViewModel
+import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
 import com.amlan.rapidsplit.ui.presentation.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -16,6 +17,7 @@ val appModule = module {
     viewModel { OnboardingViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { RideSelectionViewModel(get()) }
+    single { RideSharedViewModel() }
     single{
         LoginUseCase(get())
     }
