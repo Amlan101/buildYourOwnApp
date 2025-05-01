@@ -10,33 +10,68 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+private val LightColorScheme = lightColorScheme(
+    primary = RapidoYellow,
+    onPrimary = RapidoBlack,
+    primaryContainer = RapidoYellow.copy(alpha = 0.8f),
+    onPrimaryContainer = RapidoBlack,
+
+    secondary = RapidoGrey,
+    onSecondary = RapidoWhite,
+    secondaryContainer = RapidoGrey.copy(alpha = 0.7f),
+    onSecondaryContainer = RapidoWhite,
+
+    tertiary = RapidoBlue,
+    onTertiary = RapidoBlack,
+    tertiaryContainer = RapidoBlue.copy(alpha = 0.7f),
+    onTertiaryContainer = RapidoBlack,
+
+    error = RapidoRed,
+    onError = RapidoWhite,
+
+    background = RapidoBackgroundGrey,
+    onBackground = RapidoBlack,
+
+    surface = RapidoWhite,
+    onSurface = RapidoBlack,
+
+    surfaceVariant = RapidoBackgroundGrey,
+    onSurfaceVariant = RapidoGrey
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val DarkColorScheme = darkColorScheme(
+    primary = RapidoYellow,
+    onPrimary = RapidoBlack,
+    primaryContainer = RapidoYellow.copy(alpha = 0.7f),
+    onPrimaryContainer = RapidoBlack,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    secondary = RapidoGrey.copy(alpha = 0.8f),
+    onSecondary = RapidoWhite,
+    secondaryContainer = RapidoGrey.copy(alpha = 0.6f),
+    onSecondaryContainer = RapidoWhite,
+
+    tertiary = RapidoBlue,
+    onTertiary = RapidoWhite,
+    tertiaryContainer = RapidoBlue.copy(alpha = 0.6f),
+    onTertiaryContainer = RapidoWhite,
+
+    error = RapidoRed,
+    onError = RapidoWhite,
+
+    background = RapidoBlack,
+    onBackground = RapidoWhite,
+
+    surface = RapidoGrey,
+    onSurface = RapidoWhite,
+
+    surfaceVariant = RapidoGrey.copy(alpha = 0.3f),
+    onSurfaceVariant = RapidoLightGrey
 )
 
 @Composable
-fun RapidSpiltTheme(
+fun RapidSplitTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -44,7 +79,6 @@ fun RapidSpiltTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

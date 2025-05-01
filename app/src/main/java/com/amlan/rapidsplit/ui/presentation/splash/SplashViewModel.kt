@@ -11,7 +11,7 @@ class SplashViewModel() : ViewModel() {
 
     init {
         viewModelScope.launch {
-            delay(2000)
+            delay(2500)
             navigateToNext.value = true
         }
     }
