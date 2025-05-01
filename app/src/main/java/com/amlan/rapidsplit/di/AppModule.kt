@@ -1,10 +1,15 @@
 package com.amlan.rapidsplit.di
 
+import androidx.room.Room
+import com.amlan.rapidsplit.data.local.db.AppDatabase
 import com.amlan.rapidsplit.data.repository.LoginRepository
+import com.amlan.rapidsplit.data.repository.SplitRepository
 import com.amlan.rapidsplit.data.repository.impl.LoginRepositoryImpl
+import com.amlan.rapidsplit.data.repository.impl.SplitRepositoryImpl
 import com.amlan.rapidsplit.domain.usecase.CalculateEstimateUseCase
 import com.amlan.rapidsplit.domain.usecase.CalculateSplitUseCase
 import com.amlan.rapidsplit.domain.usecase.LoginUseCase
+import com.amlan.rapidsplit.domain.usecase.SaveSplitUseCase
 import com.amlan.rapidsplit.domain.usecase.SelectPaymentMethodUseCase
 import com.amlan.rapidsplit.ui.presentation.fuelsplit.FuelSplitViewModel
 import com.amlan.rapidsplit.ui.presentation.login.LoginViewModel
@@ -17,17 +22,30 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
+
+    // ViewModels
     viewModel { SplashViewModel() }
     viewModel { OnboardingViewModel() }
     viewModel { LoginViewModel(get()) }
     viewModel { RideSelectionViewModel(get()) }
     viewModel { PaymentViewModel(get()) }
-    viewModel { FuelSplitViewModel(get(), get()) }
+    viewModel { FuelSplitViewModel(get(), get(), get()) }
 
+    // Repositories
+    single<SplitRepository> { SplitRepositoryImpl(get()) }
+
+    // UseCase
     single { RideSharedViewModel() }
     single{ LoginUseCase(get()) }
     single<LoginRepository> { LoginRepositoryImpl() }
     single { CalculateEstimateUseCase() }
     single { SelectPaymentMethodUseCase() }
     single { CalculateSplitUseCase() }
+    single { SaveSplitUseCase(get()) }
+
+    // Room
+    single {
+        Room.databaseBuilder(get(), AppDatabase::class.java, "rapid_split.db").build()
+    }
+    single { get<AppDatabase>().splitDao() }
 }

@@ -140,8 +140,7 @@ fun FuelSplitScreen(
         // Finish button
         Button(
             onClick = {
-                // Clear ride data and navigate home
-                sharedViewModel.setConfirmedRide(null)
+                viewModel.saveSplits()
                 navController.navigate(Screen.Home.route) {
                     popUpTo(Screen.Home.route) { inclusive = true }
                 }
