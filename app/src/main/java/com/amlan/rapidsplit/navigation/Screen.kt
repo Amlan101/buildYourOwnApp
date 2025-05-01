@@ -10,4 +10,5 @@ sealed class Screen(val route: String) {
     object Payment : Screen("payment")
     object FuelSplit : Screen("fuelsplit")
     object PaymentSuccess : Screen("payment_success")
+    object SplitHistory : Screen("split_history")
 }

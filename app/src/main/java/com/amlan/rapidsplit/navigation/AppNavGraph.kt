@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.amlan.rapidsplit.ui.presentation.booking.BookingScreen
 import com.amlan.rapidsplit.ui.presentation.fuelsplit.FuelSplitScreen
+import com.amlan.rapidsplit.ui.presentation.history.SplitHistoryScreen
 import com.amlan.rapidsplit.ui.presentation.home.HomeScreen
 import com.amlan.rapidsplit.ui.presentation.login.LoginScreen
 import com.amlan.rapidsplit.ui.presentation.onboarding.OnboardingScreen
@@ -30,5 +31,6 @@ fun AppNavGraph(navController: NavHostController){
         composable(Screen.Payment.route) { PaymentScreen(navController) }
         composable(Screen.FuelSplit.route) { FuelSplitScreen(navController) }
         composable(Screen.PaymentSuccess.route) { PaymentSuccessScreen(navController) }
+        composable(Screen.SplitHistory.route) { SplitHistoryScreen(navController) }
     }
 }

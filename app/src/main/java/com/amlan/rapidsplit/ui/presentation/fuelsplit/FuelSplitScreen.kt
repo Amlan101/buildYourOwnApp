@@ -18,15 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.amlan.rapidsplit.data.local.db.entity.SplitEntity
 import com.amlan.rapidsplit.navigation.Screen
-import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
 import org.koin.androidx.compose.get
 
 @Composable
 fun FuelSplitScreen(
     navController: NavHostController,
-    viewModel: FuelSplitViewModel = get(),
-    sharedViewModel: RideSharedViewModel = get()
+    viewModel: FuelSplitViewModel = get()
 ) {
 
     val ride = viewModel.ride
@@ -109,13 +108,11 @@ fun FuelSplitScreen(
                 modifier = Modifier.fillMaxWidth(),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
+                Column(modifier = Modifier.padding(16.dp)) {
                     Text("Split Summary:", style = MaterialTheme.typography.titleMedium)
                     Divider(modifier = Modifier.padding(vertical = 8.dp))
 
-                    viewModel.splitList.forEach { splitEntry ->
+                    viewModel.splitList.forEach { splitEntry: SplitEntity ->
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -123,7 +120,7 @@ fun FuelSplitScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(splitEntry.name)
-                            Text("₹${splitEntry.amount}")
+                            Text("₹${"%.2f".format(splitEntry.amount)}")
                         }
                     }
                 }

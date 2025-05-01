@@ -1,27 +1,23 @@
 package com.amlan.rapidsplit.ui.presentation.fuelsplit
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import com.amlan.rapidsplit.domain.model.SplitEntry
-import com.amlan.rapidsplit.domain.usecase.CalculateSplitUseCase
-import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.amlan.rapidsplit.data.local.db.entity.SplitEntity
+import com.amlan.rapidsplit.domain.usecase.CalculateSplitUseCase
 import com.amlan.rapidsplit.domain.usecase.SaveSplitUseCase
+import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
 import kotlinx.coroutines.launch
-
 
 class FuelSplitViewModel(
     private val calculateSplitUseCase: CalculateSplitUseCase,
     private val saveSplitUseCase: SaveSplitUseCase,
     private val rideSharedViewModel: RideSharedViewModel
-): ViewModel() {
+) : ViewModel() {
+
     var friendName by mutableStateOf("")
     val friends = mutableStateListOf<String>()
-    val splitList = mutableStateListOf<SplitEntry>()
+    val splitList = mutableStateListOf<SplitEntity>()
 
     val ride get() = rideSharedViewModel.confirmedRide.value
 
@@ -34,27 +30,23 @@ class FuelSplitViewModel(
     }
 
     private fun calculateSplit() {
-        val total = ride?.estimatedPrice ?: 0.0
+        val ride = this.ride ?: return
+        val splits = calculateSplitUseCase(
+            totalAmount = ride.estimatedPrice,
+            people = friends,
+            vehicleType = ride.vehicleType,
+            startLocation = ride.startLocation,
+            destination = ride.destination
+        )
         splitList.clear()
-        splitList.addAll(calculateSplitUseCase.execute(total, friends))
+        splitList.addAll(splits)
     }
 
     fun saveSplits() {
-        val ride = this.ride ?: return
         viewModelScope.launch {
             splitList.forEach { entry ->
-                saveSplitUseCase.execute(
-                    SplitEntity(
-                        name = entry.name,
-                        amount = entry.amount,
-                        vehicleType = ride.vehicleType.name,
-                        start = ride.startLocation,
-                        destination = ride.destination,
-                        timestamp = System.currentTimeMillis()
-                    )
-                )
+                saveSplitUseCase.execute(entry)
             }
         }
     }
-
 }

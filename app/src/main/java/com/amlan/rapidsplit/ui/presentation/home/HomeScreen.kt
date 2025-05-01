@@ -33,5 +33,10 @@ fun HomeScreen(navController: NavHostController) {
         Button(onClick = { navController.navigate(Screen.FuelSplit.route) }) {
             Text("Split Fare with Friends")
         }
+        Button(onClick = {
+            navController.navigate(Screen.SplitHistory.route)
+        }) {
+            Text("View Split History")
+        }
     }
 }
