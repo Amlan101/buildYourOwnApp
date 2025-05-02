@@ -80,4 +80,7 @@ dependencies {
 
     // Tooling
     debugImplementation(libs.ui.tooling)
+
+    // Extended Icons
+    implementation(libs.androidx.material.icons.extended.android)
 }
