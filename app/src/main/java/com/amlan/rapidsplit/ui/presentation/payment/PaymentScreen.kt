@@ -1,6 +1,7 @@
 package com.amlan.rapidsplit.ui.presentation.payment
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,29 +9,36 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.SportsMotorsports
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.amlan.rapidsplit.domain.model.PaymentMethod
 import com.amlan.rapidsplit.navigation.Screen
 import com.amlan.rapidsplit.ui.presentation.shared.RideSharedViewModel
+import com.amlan.rapidsplit.ui.theme.RapidoGreen
+import com.amlan.rapidsplit.ui.theme.RapidoLightGrey
 import org.koin.androidx.compose.get
 
 @Composable
@@ -40,125 +48,227 @@ fun PaymentScreen(
     sharedViewModel: RideSharedViewModel = get()
 ) {
     val ride by remember { sharedViewModel.confirmedRide }
+    val scrollState = rememberScrollState()
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Add a back button
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Go Back")
-            }
-            Text("Payment", style = MaterialTheme.typography.displayMedium)
+    Scaffold(
+        topBar = {
+            RapidoHeader(
+                title = "Payment",
+                onBackClick = { navController.popBackStack() }
+            )
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Safely access ride details with null check
-        ride?.let { confirmedRide ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        "Ride Summary",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Divider(modifier = Modifier.padding(vertical = 8.dp))
-                    Text("Start: ${confirmedRide.startLocation}")
-                    Text("Destination: ${confirmedRide.destination}")
-                    Text("Price: ₹${confirmedRide.estimatedPrice}")
-                    Text("Time: ${confirmedRide.estimatedTime} mins")
-                }
-            }
-        } ?: run {
-            // Handle the case when ride is null
-            Text("No ride selected. Please go back and select a ride first.")
-            Button(onClick = { navController.popBackStack() }) {
-                Text("Go Back")
-            }
-            return@Column
-        }
-
-        Spacer(Modifier.height(20.dp))
-        Text("Select Payment Method:", style = MaterialTheme.typography.titleMedium)
-
-        // Payment method selection
-        Card(
+    ) { paddingValues ->
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(scrollState)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                PaymentMethod.entries.forEach { method ->
+            ride?.let { confirmedRide ->
+                // Ride Summary Card
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    Icons.Default.SportsMotorsports,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    "Ride Summary",
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                            }
+
+                            PriceTag(
+                                amount = confirmedRide.estimatedPrice.toString(),
+                                backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                                textColor = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        Divider(modifier = Modifier.padding(vertical = 12.dp))
+
+                        InfoRow(label = "From", value = confirmedRide.startLocation)
+                        InfoRow(label = "To", value = confirmedRide.destination)
+                        InfoRow(label = "Vehicle", value = confirmedRide.vehicleType.toString())
+                        InfoRow(
+                            label = "Estimated Time",
+                            value = "${confirmedRide.estimatedTime} mins"
+                        )
+                    }
+                }
+
+                // Payment Methods
+                Text(
+                    "Select Payment Method",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
+                )
+
+                PaymentMethodOptions(
+                    selectedMethod = viewModel.selectedMethod,
+                    onMethodSelected = { viewModel.selectedMethod = it }
+                )
+
+                LabeledDivider(label = "OR")
+
+                // Payment Actions
+                Text(
+                    "How do you want to proceed?",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(
+                        onClick = {
+                            viewModel.confirmPayment()
+                            if (viewModel.isPaymentConfirmed) {
+                                navController.navigate(Screen.FuelSplit.route)
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(56.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = RapidoGreen
+                        )
+                    ) {
+                        Text(
+                            "Split Fare",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(
+                        onClick = {
+                            viewModel.confirmPayment()
+                            if (viewModel.isPaymentConfirmed) {
+                                navController.navigate(Screen.PaymentSuccess.route)
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(56.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text(
+                            "Pay Solo",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                    }
+                }
+
+                // Payment security note
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp),
+                            .padding(12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        RadioButton(
-                            selected = viewModel.selectedMethod == method,
-                            onClick = { viewModel.selectedMethod = method }
+                        Icon(
+                            Icons.Default.Settings,
+                            contentDescription = null,
+                            tint = RapidoLightGrey,
+                            modifier = Modifier.size(20.dp)
                         )
+
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(method.name)
+
+                        Text(
+                            "All payments are secure and encrypted",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = RapidoLightGrey
+                        )
                     }
                 }
-            }
-        }
 
-        Spacer(Modifier.height(24.dp))
-        Text("How do you want to proceed?", style = MaterialTheme.typography.titleMedium)
+            } ?: run {
+                // Handle the case when ride is null
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            "No ride selected",
+                            style = MaterialTheme.typography.titleLarge,
+                            textAlign = TextAlign.Center
+                        )
 
-        // Payment buttons with better layout
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Button(
-                onClick = {
-                    viewModel.confirmPayment()
-                    if (viewModel.isPaymentConfirmed) {
-                        navController.navigate(Screen.FuelSplit.route)
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            "Please go back and select a ride first",
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center,
+                            color = RapidoLightGrey
+                        )
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        Button(
+                            onClick = { navController.popBackStack() },
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text("Go Back")
+                        }
                     }
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Split Fare")
-            }
-
-            Spacer(Modifier.width(16.dp))
-
-            Button(
-                onClick = {
-                    viewModel.confirmPayment()
-                    if (viewModel.isPaymentConfirmed) {
-                        navController.navigate(Screen.PaymentSuccess.route)
-                    }
-                },
-                modifier = Modifier.weight(1f),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
-            ) {
-                Text("Pay Solo")
+                }
             }
         }
     }
 }
-
-
 

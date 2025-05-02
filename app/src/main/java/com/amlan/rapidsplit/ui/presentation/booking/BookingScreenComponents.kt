@@ -268,7 +268,7 @@ fun CaptainDetailsCard() {
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
-                        text = "Rajesh K",
+                        text = "Amlan Sahoo",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
