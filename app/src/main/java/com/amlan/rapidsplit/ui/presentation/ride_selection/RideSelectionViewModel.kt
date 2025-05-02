@@ -25,7 +25,6 @@ class RideSelectionViewModel(
     }
     fun confirmRide(sharedViewModel: RideSharedViewModel) {
         rideEstimate?.let {
-            // Use the setter method instead of direct assignment
             sharedViewModel.setConfirmedRide(it)
         }
     }
