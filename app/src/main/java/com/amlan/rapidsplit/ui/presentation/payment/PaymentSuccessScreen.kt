@@ -185,8 +185,8 @@ fun PaymentSuccessScreen(
                     OutlinedButton(
                         onClick = {
                             sharedViewModel.setConfirmedRide(null)
-                            navController.navigate(Screen.Home.route) {
-                                popUpTo(Screen.Home.route) { inclusive = true }
+                            navController.navigate(Screen.SplitHistory.route) {
+                                popUpTo(Screen.Home.route) { inclusive = false }
                             }
                         },
                         modifier = Modifier
@@ -200,11 +200,11 @@ fun PaymentSuccessScreen(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.History,
-                                contentDescription = null
+                                contentDescription = "View Split History"
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                "View Booking History",
+                                "View Fare Split History",
                                 style = MaterialTheme.typography.titleMedium
                             )
                         }
