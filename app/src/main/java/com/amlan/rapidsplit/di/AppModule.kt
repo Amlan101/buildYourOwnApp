@@ -8,12 +8,15 @@ import com.amlan.rapidsplit.data.repository.impl.LoginRepositoryImpl
 import com.amlan.rapidsplit.data.repository.impl.SplitRepositoryImpl
 import com.amlan.rapidsplit.domain.usecase.CalculateEstimateUseCase
 import com.amlan.rapidsplit.domain.usecase.CalculateSplitUseCase
+import com.amlan.rapidsplit.domain.usecase.GetDestinationsUseCase
+import com.amlan.rapidsplit.domain.usecase.GetRideHistoryUseCase
 import com.amlan.rapidsplit.domain.usecase.GetSplitHistoryUseCase
 import com.amlan.rapidsplit.domain.usecase.LoginUseCase
 import com.amlan.rapidsplit.domain.usecase.SaveSplitUseCase
 import com.amlan.rapidsplit.domain.usecase.SelectPaymentMethodUseCase
 import com.amlan.rapidsplit.ui.presentation.fuelsplit.FuelSplitViewModel
 import com.amlan.rapidsplit.ui.presentation.history.SplitHistoryViewModel
+import com.amlan.rapidsplit.ui.presentation.home.HomeViewModel
 import com.amlan.rapidsplit.ui.presentation.login.LoginViewModel
 import com.amlan.rapidsplit.ui.presentation.onboarding.OnboardingViewModel
 import com.amlan.rapidsplit.ui.presentation.payment.PaymentViewModel
@@ -33,12 +36,15 @@ val appModule = module {
     viewModel { PaymentViewModel(get()) }
     viewModel { FuelSplitViewModel(get(), get(), get()) }
     viewModel { SplitHistoryViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
 
     // Repositories
     single<SplitRepository> { SplitRepositoryImpl(get()) }
 
-    // UseCase
+    // Shared ViewModel
     single { RideSharedViewModel() }
+
+    // UseCase
     single{ LoginUseCase(get()) }
     single<LoginRepository> { LoginRepositoryImpl() }
     single { CalculateEstimateUseCase() }
@@ -46,6 +52,8 @@ val appModule = module {
     single { CalculateSplitUseCase() }
     single { SaveSplitUseCase(get()) }
     single { GetSplitHistoryUseCase(get()) }
+    single { GetDestinationsUseCase() }
+    single { GetRideHistoryUseCase() }
 
     // Room
     single {
