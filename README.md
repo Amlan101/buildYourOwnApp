@@ -35,31 +35,31 @@ Perfect for the times when you're riding with buddies and nobody wants to do the
 
 <table>
   <tr>
-    <td><img src="screenshots/splash_screen.png" width="200"/></td>
-    <td><img src="screenshots/onboarding_screen_1.png" width="200"/></td>
+    <td><img src="screenshots/splash_screen.jpg" width="200"/></td>
+    <td><img src="screenshots/onboarding_screen_1.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/onboarding_screen_2.png" width="200"/></td>
-    <td><img src="screenshots/onboarding_screen_3.png" width="200"/></td>
+    <td><img src="screenshots/onboarding_screen_2.jpg" width="200"/></td>
+    <td><img src="screenshots/onboarding_screen_3.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/login_screen.png" width="200"/></td>
-    <td><img src="screenshots/home_screen_1.png" width="200"/></td>
+    <td><img src="screenshots/login_screen.jpg" width="200"/></td>
+    <td><img src="screenshots/home_screen_1.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/home_screen_2.png" width="200"/></td>
-    <td><img src="screenshots/ride_selection_screen.png" width="200"/></td>
+    <td><img src="screenshots/home_screen_2.jpg" width="200"/></td>
+    <td><img src="screenshots/ride_selection_screen.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/booking_details_screen.png" width="200"/></td>
-    <td><img src="screenshots/payment_options_screen.png" width="200"/></td>
+    <td><img src="screenshots/booking_details_screen.jpg" width="200"/></td>
+    <td><img src="screenshots/payment_options_screen.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/payment_successful_screen.png" width="200"/></td>
-    <td><img src="screenshots/split_fare_screen.png" width="200"/></td>
+    <td><img src="screenshots/payment_successful_screen.jpg" width="200"/></td>
+    <td><img src="screenshots/split_fare_screen.jpg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="screenshots/split_fare_history_screen.png" width="200"/></td>
+    <td><img src="screenshots/split_fare_history_screen.jpg" width="200"/></td>
   </tr>
 </table>
 
