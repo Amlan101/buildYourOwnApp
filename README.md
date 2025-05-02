@@ -67,13 +67,13 @@ Perfect for the times when you're riding with buddies and nobody wants to do the
 
 ## 🎥 Demo
 
-👉 [Watch Demo Video](#https://drive.google.com/file/d/18z5k9uJe2tPK0TQehd7A6G_3dazf3YBz/view?usp=sharing)
+👉 [Watch Demo Video](https://drive.google.com/file/d/18z5k9uJe2tPK0TQehd7A6G_3dazf3YBz/view?usp=sharing)
 
 ---
 
 ## 📦 APK
 
-👉 [Download APK](#https://drive.google.com/file/d/1H_bVP_q6uNJ2TJFrDG16inGpmb8fMWUc/view?usp=sharing)
+👉 [Download APK](https://drive.google.com/file/d/1H_bVP_q6uNJ2TJFrDG16inGpmb8fMWUc/view?usp=sharing)
 
 ---
 
